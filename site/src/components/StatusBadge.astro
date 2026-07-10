@@ -1,0 +1,18 @@
+---
+export interface Props {
+  status: string;
+}
+const { status } = Astro.props;
+
+const labelMap: Record<string, string> = {
+  'active': '活跃',
+  'evolved': '已演化',
+  'dormant': '休眠',
+  'pilot-next': '下一阶段 Pilot',
+  'archive-maintained': '档案 · 维护中',
+};
+
+const cls = `status-badge status-badge--${status}`;
+const label = labelMap[status] ?? status;
+---
+<span class={cls}><span aria-hidden="true">●</span> {label}</span>

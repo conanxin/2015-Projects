@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import lineage from '../data/lineage.json';
+
+const seeds = await getCollection('seeds');
+const seedById: Record<string, typeof seeds[number]> = {};
+for (const s of seeds) seedById[s.data.id] = s;
+
+const mapping: Record<string, string[]> = {
+  voice:   ['conanxin/wonder-window-cn', 'conanxin/ai-radio-mvp', 'conanxin/medium-archive', 'conanxin/hermes-knowledge-base', 'conanxin/2015-Daily-Recording', 'conanxin/2016-Daily-Recording', 'conanxin/hermes-agent'],
+  reading: ['conanxin/ebook-treasure-chest', 'conanxin/ebook-content-lab', 'conanxin/book-id-search', 'conanxin/DocuMuse', 'conanxin/courses-zh'],
+  design:  ['conanxin/courses-zh', 'conanxin/medium-archive'],
+  memory:  ['conanxin/DocuMuse', 'conanxin/hermes-knowledge-base', 'conanxin/ai-radio-mvp'],
+};
+
+const repoByFull: Record<string, any> = {};
+for (const d of lineage.descendants) repoByFull[d.repo] = d;
+---
+<BaseLayout title="项目谱系 · 2015 Projects Reborn" pathname="/lineage">
+  <section class="section">
+    <h1>项目谱系：四个种子 → 11 个后继</h1>
+    <p class="section__lede">
+      每一列里列出该种子对应的活跃后继仓库。本阶段不合并这些仓库的代码。
+      每个仓库在自己的仓库里更新；本仓库只记录连接，不参与构建。
+    </p>
+  </section>
+
+  <section class="lineage-grid">
+    {(['voice','reading','design','memory'] as const).map((id) => {
+      const seed = seedById[id];
+      if (!seed) return null;
+      const repos = mapping[id] ?? [];
+      return (
+        <div class="lineage-col">
+          <h3>
+            {seed.data.titleZh} <small>· {seed.data.titleEn}</small>
+          </h3>
+          <p style="font-size:0.9rem;color:var(--color-ink-soft);margin:0 0 0.6rem;">
+            原始：<code>{seed.data.originalDocument}</code>（{seed.data.originalDate}）
+          </p>
+          {repos.map((repo) => {
+            const d = repoByFull[repo];
+            if (!d) return null;
+            return (
+              <div class="lineage-repo">
+                <div class="lineage-repo__name">
+                  <a href={`https://github.com/${d.repo}`}>{(d as any).repo}</a>
+                </div>
+                <div class="lineage-repo__role">{(d as any).currentRole}</div>
+                <div class="lineage-repo__meta">
+                  {(d as any).linkType}
+                  {!(d as any).stillMaintained ? ' · 已停更' : ''}
+                  {(d as any).operatorOnly ? ' · 仅作操作者' : ''}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      );
+    })}
+  </section>
+
+  <section class="section">
+    <h2>连接原则</h2>
+    <ul>
+      <li>每个后继仓库在自己的 README / CI 中自管理。</li>
+      <li>本仓库 <code>conanxin/2015-Projects</code> 只记录连接，不拷贝代码。</li>
+      <li>若需要共享 schema，schema 应放在各自仓库（如 <code>ebook-content-lab/schemas/</code>），不在这里复制。</li>
+      <li>本阶段不在本仓库执行链接自动定时任务；链接审计按需触发（<a href="/timeline">见时间线</a>）。</li>
+    </ul>
+  </section>
+</BaseLayout>

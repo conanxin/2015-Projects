@@ -1,0 +1,96 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StatusBadge from '../components/StatusBadge.astro';
+
+type SeedEntry = CollectionEntry<'seeds'>;
+
+const seeds: SeedEntry[] = (await getCollection('seeds')).sort((a: SeedEntry, b: SeedEntry) =>
+  a.data.id.localeCompare(b.data.id)
+);
+
+// Build a quick lookup from id -> role tag for the index
+const roleById: Record<string, { tag: string; cls: string; label: string }> = {
+  voice:    { tag: 'broadcast',  cls: 'role-tag--broadcast', label: 'P1 传播：编辑与音频层' },
+  reading:  { tag: 'capability', cls: 'role-tag--capability', label: 'P2 能力：阅读 / 解析 / 检索' },
+  design:   { tag: 'maintain',   cls: 'role-tag--maintain',   label: 'P3 维护实验：链接档案' },
+  memory:   { tag: 'pilot',      cls: 'role-tag--pilot',      label: 'P4 核心：近期旗舰 Pilot / 长期核心' },
+};
+
+import lineage from '../data/lineage.json';
+
+const repoCount = lineage.descendants.length;
+---
+<BaseLayout
+  title="2015 Projects Reborn · 个人知识与记忆实验室"
+  pathname="/"
+>
+  <section class="section">
+    <p class="section__lede">
+      2015 年初，作者写了 4 份关于未来想做之事的小文档。本仓库把这 4 份文档原样保留，
+      并把它们与 2026 年仍在生长的 {repoCount} 个仓库放在同一张地图上。
+    </p>
+    <p>
+      这不是一份博客，也不是一个新产品。这是一个<span style="font-weight:600">项目谱系中枢</span>，
+      说明这 11 年里哪些想法留下了、哪些想法换了样子、哪些想法还没动起来。
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="seeds-heading">
+    <h2 id="seeds-heading">四个种子项目</h2>
+    <p class="section__lede">每一项都对应着一份 2015 年的原始文档（原文不被改动）和一组当前的角色。</p>
+    <div class="cards">
+      {seeds.map((seed) => {
+        const r = roleById[seed.data.id];
+        return (
+          <article class="card">
+            <h3 class="card__title">
+              {seed.data.titleZh} <small>· {seed.data.titleEn}</small>
+            </h3>
+            <div>
+              <StatusBadge status={seed.data.status} />
+              <span class={`role-tag ${r.cls}`}>{r.label}</span>
+            </div>
+            <p class="card__desc">{seed.data.currentRole}</p>
+            <div class="card__meta">
+              原始日期：<time>{seed.data.originalDate}</time> · 原始文档：
+              <a href={`https://github.com/conanxin/2015-Projects/blob/master/${encodeURIComponent(seed.data.originalDocument)}`}>
+                {seed.data.originalDocument}
+              </a>
+            </div>
+            <a class="card__link" href={`/seeds/${seed.data.slug}`}>查看 →</a>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="pilot-heading">
+    <h2 id="pilot-heading">下一步：家庭记忆 Pilot</h2>
+    <p>
+      四个种子里，<strong>P4 家庭口述历史</strong>是唯一一个还没有旗舰后继。
+      它也是四个中唯一一个在 2026 真正凑齐了工具链的：OHMS 提供时间码锚定的思路，
+      Omeka S 提供内容数据模型参考，<code>DocuMuse</code> 已能识别 interview 文档类型，
+      <code>hermes-knowledge-base</code> 已经支持 <code>interview</code> 内容类型。
+    </p>
+    <p>
+      V0.1 把这一定位写进谱系页面。<a href="/lineage">前往谱系 →</a>
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="repos-heading">
+    <h2 id="repos-heading">{repoCount} 个后继项目</h2>
+    <p class="section__lede">本阶段只连接，不合并代码。每个项目保留自己的代码与发布节奏。</p>
+    <ul>
+      {lineage.descendants.map((d) => (
+        <li>
+          <a href={`https://github.com/${d.repo}`}><code>{d.repo}</code></a> — {d.currentRole}
+          {!d.stillMaintained && <em>（历史记录）</em>}
+          {d.operatorOnly && <em> （仅作为操作者引用，不作为代码依赖）</em>}
+        </li>
+      ))}
+    </ul>
+    <p>更多链接结构见 <a href="/lineage">/lineage</a>；时间线见 <a href="/timeline">/timeline</a>。</p>
+  </section>
+</BaseLayout>

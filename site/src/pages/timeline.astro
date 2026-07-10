@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import timeline from '../data/timeline.json';
+
+const kindLabel: Record<string, string> = {
+  'origin': '起源',
+  'habit-evidence': '习惯证据',
+  'pre-history': '更早起点',
+  'operator-online': '操作者出现',
+  'indirect-descendant': '间接后继',
+  'revival-audit': '复兴审计',
+  'site-launch': '站点上线',
+  'next': '下一步',
+};
+---
+<BaseLayout title="时间线 · 2015 Projects Reborn" pathname="/timeline">
+  <section class="section">
+    <h1>2015 → 2026 时间线</h1>
+    <p class="section__lede">
+      这一页只记下能从本仓库 commit 与 R0 报告里验证到的事件。无法精确到日的写成 <em>approximate</em>；
+      无法验证的就不写。
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="tl-past">
+    <h2 id="tl-past">已经发生</h2>
+    <ol class="timeline" role="list">
+      {timeline.events
+        .filter((e) => e.kind !== 'next')
+        .map((e) => (
+          <li>
+            <span class="timeline__date">
+              {e.year}{e.month ? `-${String(e.month).padStart(2, '0')}` : ''}
+              {' · '}{kindLabel[e.kind] ?? e.kind}
+              {('approximate' in e && e.approximate) ? ' · approximate' : ''}
+            </span>
+            <h3 class="timeline__title">{e.title}</h3>
+            <p class="timeline__note">{e.note}</p>
+            {('linkTo' in e && e.linkTo) && (
+              <p><a href={e.linkTo as string}>查看来源 →</a></p>
+            )}
+          </li>
+        ))}
+    </ol>
+  </section>
+
+  <section class="section" aria-labelledby="tl-next">
+    <h2 id="tl-next">下一步</h2>
+    <ol class="timeline timeline__next" role="list">
+      {timeline.events
+        .filter((e) => e.kind === 'next')
+        .map((e) => (
+          <li>
+            <span class="timeline__date">approximate · 下一阶段</span>
+            <h3 class="timeline__title">{e.title}</h3>
+            <p class="timeline__note">{e.note}</p>
+          </li>
+        ))}
+    </ol>
+  </section>
+</BaseLayout>

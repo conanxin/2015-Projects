@@ -1,0 +1,80 @@
+{
+  "$comment": "Timeline entries — only include events verifiable from the source repository itself or the 2026 R0 audit report. Uncertain dates use 'approximate'.",
+  "events": [
+    {
+      "year": 2015,
+      "month": 1,
+      "title": "四个种子项目同时落笔",
+      "note": "2015.1.3：README + 1.Podcast-Plan.md + 2.E-Reader.md；2015.1.11：4.Recordingl history.md（标题 'Recordingl history.md' 中的拼写按原文保留）；2015.1.12：3.DESIGNING For The Web.md。四个文件在本仓库原始 commit 中均可验证。",
+      "kind": "origin"
+    },
+    {
+      "year": 2015,
+      "month": 1,
+      "title": "开始公开每日的思考与片段记录",
+      "note": "conanxin/2015-Daily-Recording 公开镜像：'一年 365 天，到最后大约会有 360 多篇的文章'。原始 commit 时间见该仓库 2015-01-01（approximate，按 README 自述）。",
+      "kind": "habit-evidence",
+      "linkTo": "https://github.com/conanxin/2015-Daily-Recording"
+    },
+    {
+      "year": 2016,
+      "month": 1,
+      "title": "2015 习惯复盘：坚持下来了，但内容偏离了初衷",
+      "note": "2016-Daily-Recording README 原话：'计划是美好的，但现实是残酷的，唯一令人欣慰的是不考虑内容如何，自己坚持做下来了'。之后 2016 尝试延续，约 52 天后停更（按仓库最后一次 push 时间 2016-02-21 推断，approximate）。",
+      "kind": "habit-evidence",
+      "linkTo": "https://github.com/conanxin/2016-Daily-Recording"
+    },
+    {
+      "year": 2014,
+      "month": null,
+      "title": "E-Reader 想法的更早起点",
+      "note": "2.E-Reader.md 中提到一个 Tumblr 主页 'Make Open E-Reader'（mereader.tumblr.com）。该链接在 2026 链接审计中表现为 network_unreachable（无法从数据机房访问 Tumblr），故无法精确确认年份（approximate）。",
+      "kind": "pre-history"
+    },
+    {
+      "year": 2026,
+      "month": 4,
+      "title": "Hermes Agent 上线（操作者出现）",
+      "note": "conanxin/hermes-agent 仓库创建于 2026-04-12，由 Nous Research 维护；本仓库作为 Hermes 维护的元项目之一（operator 角色，非代码依赖）。",
+      "kind": "operator-online",
+      "linkTo": "https://github.com/conanxin/hermes-agent"
+    },
+    {
+      "year": 2026,
+      "month": 5,
+      "title": "DocuMuse 落地（家庭口述历史的间接抓手）",
+      "note": "conanxin/DocuMuse 2026-05-31 创建，本地 PDF 阅读 + AI 解析，含 interview 文档类型识别。是 P4 间接抓手。",
+      "kind": "indirect-descendant",
+      "linkTo": "https://github.com/conanxin/DocuMuse"
+    },
+    {
+      "year": 2026,
+      "month": 6,
+      "title": "内容与阅读侧密集上线",
+      "note": "2026 年 6 月，ebook-treasure-chest (06-19)、hermes-knowledge-base (06-20)、ebook-content-lab (06-29)、book-id-search (06-30) 集中出现，均为 P2 开放阅读或 P1 转录/整理侧的活跃项目。",
+      "kind": "indirect-descendant"
+    },
+    {
+      "year": 2026,
+      "month": 7,
+      "title": "2015-Projects 复兴审计（R0）",
+      "note": "本任务前置。修复日期：本仓库保持原状，仅新增 reports/ 目录，提交 'docs: add 2026 revival research baseline'。",
+      "kind": "revival-audit"
+    },
+    {
+      "year": 2026,
+      "month": 7,
+      "title": "V0.1 项目谱系站上线（当前任务）",
+      "note": "建立 2015 Projects Reborn / 个人知识与记忆实验室 的静态项目谱系站。讲清楚四个种子如何演化到 2026，并明确 P4 家庭口述历史为下一阶段旗舰方向。",
+      "kind": "site-launch"
+    },
+    {
+      "year": null,
+      "month": null,
+      "title": "下一阶段：家庭口述历史单样本 Pilot（V0.2）",
+      "note": "尚未发生。本任务不实现，仅作为时间线下一节点记录，由下一阶段任务承担。",
+      "kind": "next",
+      "approximate": true
+    }
+  ]
+}

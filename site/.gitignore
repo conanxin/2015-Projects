@@ -1,0 +1,8 @@
+# site/ — V0.1 Astro project
+node_modules/
+dist/
+.astro/
+.env
+.env.local
+.DS_Store
+*.log

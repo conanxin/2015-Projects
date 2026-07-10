@@ -1,0 +1,151 @@
+{
+  "$comment": "2015 Projects Reborn V0.1 — Lineage data. See ../content/seeds/*.md for per-seed narratives.",
+  "schemaVersion": "0.1.0",
+  "generatedFrom": "reports/2026_revival_research_report.md (R0 baseline)",
+  "note": "本阶段只连接，不合并代码。Repos share schemas and links, not source.",
+  "seeds": [
+    {
+      "id": "voice",
+      "slug": "voice",
+      "titleZh": "广播复兴",
+      "titleEn": "Personal Radio Revival",
+      "originDocument": "1.Podcast-Plan.md"
+    },
+    {
+      "id": "reading",
+      "slug": "reading",
+      "titleZh": "开放阅读",
+      "titleEn": "Open Reading",
+      "originDocument": "2.E-Reader.md"
+    },
+    {
+      "id": "design",
+      "slug": "design",
+      "titleZh": "Web 设计目录",
+      "titleEn": "Web Design Catalogue",
+      "originDocument": "3.DESIGNING For The Web.md"
+    },
+    {
+      "id": "memory",
+      "slug": "memory",
+      "titleZh": "家庭口述历史",
+      "titleEn": "Family Oral History",
+      "originDocument": "4.Recordingl history.md"
+    }
+  ],
+  "descendants": [
+    {
+      "repo": "conanxin/wonder-window-cn",
+      "titleZh": "万物小窗周刊",
+      "currentRole": "P1 广播复兴：每周一期中文 newsletter，Vite + React，已发 RSS",
+      "maturity": "active",
+      "stillMaintained": true,
+      "shouldLink": true,
+      "shouldMergeCode": false,
+      "linkType": "shell-and-rss"
+    },
+    {
+      "repo": "conanxin/ebook-treasure-chest",
+      "titleZh": "电子书下载宝库",
+      "currentRole": "P2 开放阅读：大量电子书下载链接（GitHub Pages 实时搜索）",
+      "maturity": "active",
+      "stillMaintained": true,
+      "shouldLink": true,
+      "shouldMergeCode": false,
+      "linkType": "content-index"
+    },
+    {
+      "repo": "conanxin/ebook-content-lab",
+      "titleZh": "电子书内容实验室",
+      "currentRole": "P2 / P4 证据驱动内容项目，含《从大都到上都》路线图解",
+      "maturity": "active",
+      "stillMaintained": true,
+      "shouldLink": true,
+      "shouldMergeCode": false,
+      "linkType": "schemas-and-projects"
+    },
+    {
+      "repo": "conanxin/book-id-search",
+      "titleZh": "图书标识检索",
+      "currentRole": "P2 开放阅读：5,115,734 书目元数据（Meilisearch）",
+      "maturity": "active",
+      "stillMaintained": true,
+      "shouldLink": true,
+      "shouldMergeCode": false,
+      "linkType": "search-backend"
+    },
+    {
+      "repo": "conanxin/DocuMuse",
+      "titleZh": "DocuMuse 文档工作空间",
+      "currentRole": "P4 家庭口述历史：本地 PDF 阅读与 AI 解析，含 interview 文档类型识别",
+      "maturity": "active",
+      "stillMaintained": true,
+      "shouldLink": true,
+      "shouldMergeCode": false,
+      "linkType": "interview-parser"
+    },
+    {
+      "repo": "conanxin/hermes-knowledge-base",
+      "titleZh": "Hermes 知识库",
+      "currentRole": "P1 广播复兴 + P4 家庭口述历史：转录、整理、归档、译文",
+      "maturity": "active",
+      "stillMaintained": true,
+      "shouldLink": true,
+      "shouldMergeCode": false,
+      "linkType": "curator-and-transcripts"
+    },
+    {
+      "repo": "conanxin/courses-zh",
+      "titleZh": "中文课程集合",
+      "currentRole": "P2 开放阅读：中文版学习课程（MIT How to Speak 中文版）",
+      "maturity": "active",
+      "stillMaintained": true,
+      "shouldLink": true,
+      "shouldMergeCode": false,
+      "linkType": "learning-pilot"
+    },
+    {
+      "repo": "conanxin/medium-archive",
+      "titleZh": "Medium 个人档案",
+      "currentRole": "P1 广播复兴：自身写作归档（Astro 站点）",
+      "maturity": "active",
+      "stillMaintained": true,
+      "shouldLink": true,
+      "shouldMergeCode": false,
+      "linkType": "writing-archive"
+    },
+    {
+      "repo": "conanxin/2015-Daily-Recording",
+      "titleZh": "2015 每日记录",
+      "currentRole": "P1 习惯证据：2015 每日记录，已停更",
+      "maturity": "evolved",
+      "stillMaintained": false,
+      "shouldLink": true,
+      "shouldMergeCode": false,
+      "linkType": "historical-evidence",
+      "historical": true
+    },
+    {
+      "repo": "conanxin/2016-Daily-Recording",
+      "titleZh": "2016 每日 push",
+      "currentRole": "P1 习惯证据：2016 每日 push，运行约 52 天后停更",
+      "maturity": "evolved",
+      "stillMaintained": false,
+      "shouldLink": true,
+      "shouldMergeCode": false,
+      "linkType": "historical-evidence",
+      "historical": true
+    },
+    {
+      "repo": "conanxin/hermes-agent",
+      "titleZh": "Hermes Agent",
+      "currentRole": "运营本仓库与未来 Ops 的 Agent 运行时（仅作为操作者引用，不作为代码依赖）",
+      "maturity": "active",
+      "stillMaintained": true,
+      "shouldLink": true,
+      "shouldMergeCode": false,
+      "linkType": "operator",
+      "operatorOnly": true
+    }
+  ]
+}

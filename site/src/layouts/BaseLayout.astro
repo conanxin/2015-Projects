@@ -1,0 +1,81 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description?: string;
+  pathname?: string;
+}
+
+const {
+  title,
+  description = '把 2015 年写下的四个想法，继续做下去。本仓库是「个人知识与记忆实验室」的项目谱系中枢。',
+  pathname,
+} = Astro.props;
+
+const navItems = [
+  { href: '/', label: '首页' },
+  { href: '/timeline', label: '时间线' },
+  { href: '/lineage', label: '谱系' },
+  { href: '/about', label: '关于' },
+];
+
+function isCurrent(href: string, current?: string): boolean {
+  if (!current) return false;
+  if (href === '/') return current === '/' || current === '' || current === '/index';
+  return current === href || current === href + '/' || current === href + '/index';
+}
+
+const currentPath = pathname ?? Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content="2015 Projects Reborn V0.1 (Astro static site)" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23f6f1e7'/%3E%3Ctext x='50%25' y='58%25' font-family='serif' font-size='40' text-anchor='middle' fill='%237a3e1f'%3E%E5%8F%A3%3C/text%3E%3C/svg%3E" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到正文</a>
+    <header class="site-header" role="banner">
+      <div class="site-header__inner">
+        <div class="site-header__brand">
+          <h1 class="site-header__title">2015 Projects Reborn</h1>
+          <p class="site-header__subtitle">个人知识与记忆实验室</p>
+        </div>
+        <p class="site-header__tagline">把 2015 年写下的四个想法，继续做下去。</p>
+        <nav class="site-nav" aria-label="主导航">
+          {navItems.map((item) => (
+            <a
+              href={item.href}
+              aria-current={isCurrent(item.href, currentPath) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="page" role="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+      <div class="site-footer__inner">
+        <div class="site-footer__row">
+          <span>本仓库：<code>conanxin/2015-Projects</code></span>
+          <span>当前版本：V0.1（2026-07-11）</span>
+        </div>
+        <div class="site-footer__row">
+          <span>本阶段不修改 2015 原始文档。</span>
+          <a href="https://github.com/conanxin/2015-Projects">GitHub 仓库 →</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

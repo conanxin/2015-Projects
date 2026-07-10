@@ -1,0 +1,98 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StatusBadge from '../../components/StatusBadge.astro';
+
+export async function getStaticPaths() {
+  const seeds: CollectionEntry<'seeds'>[] = await getCollection('seeds');
+  return seeds.map((seed: CollectionEntry<'seeds'>) => ({
+    params: { slug: seed.data.slug },
+    props: { seed },
+  }));
+}
+
+interface Props { seed: CollectionEntry<'seeds'> }
+const { seed } = Astro.props;
+const { Content } = await render(seed);
+---
+<BaseLayout
+  title={`${seed.data.titleZh} · ${seed.data.titleEn} · 2015 Projects Reborn`}
+  pathname={`/seeds/${seed.data.slug}`}
+  description={seed.data.originalIntent}
+>
+  <article class="detail">
+    <header>
+      <h1>{seed.data.titleZh} <small style="font-family:var(--font-sans-cn);font-weight:400;font-size:0.7em;color:var(--color-ink-soft);">· {seed.data.titleEn}</small></h1>
+      <p class="section__lede">{seed.data.originalIntent}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:0.4rem;align-items:center;margin-bottom:var(--space-3);">
+        <StatusBadge status={seed.data.status} />
+      </div>
+    </header>
+
+    <section class="detail__meta" aria-label="原始文档元数据">
+      <dl>
+        <dt>原始日期</dt>
+        <dd><time>{seed.data.originalDate}</time></dd>
+        <dt>原始文档</dt>
+        <dd>
+          <a href={`https://github.com/conanxin/2015-Projects/blob/master/${encodeURIComponent(seed.data.originalDocument)}`}>
+            <code>{seed.data.originalDocument}</code>
+          </a>
+          （本仓库不修改，仅作摘要引用）
+        </dd>
+        <dt>核心问题</dt>
+        <dd>{seed.data.coreProblem}</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>2026 重新解释</h2>
+      <p>{seed.data.currentInterpretation}</p>
+      <p>当前在产品里的角色：<strong>{seed.data.currentRole}</strong></p>
+    </section>
+
+    <section>
+      <h2>已实现</h2>
+      <ul>
+        {seed.data.completedParts.map((p: string) => <li>{p}</li>)}
+      </ul>
+    </section>
+
+    <section>
+      <h2>后继仓库</h2>
+      <div class="cards">
+        {seed.data.descendantProjects.map((d: { repo: string; role: string; linkTo?: string }) => (
+          <article class="card">
+            <h3 class="card__title">
+              <a href={`https://github.com/${d.repo}`}><code>{d.repo}</code></a>
+            </h3>
+            <p class="card__desc">{d.role}</p>
+          </article>
+        ))}
+      </div>
+      <p class="card__meta">这些仓库在本阶段不被合并代码。本仓库只记录连接，不参与构建。</p>
+    </section>
+
+    <section>
+      <h2>尚未解决</h2>
+      <ul>
+        {seed.data.unresolvedQuestions.map((q: string) => <li>{q}</li>)}
+      </ul>
+    </section>
+
+    <section>
+      <h2>下一项最小实验</h2>
+      <p>{seed.data.nextExperiment}</p>
+    </section>
+
+    <section>
+      <h2>原始内容摘录</h2>
+      <blockquote>
+        <Content />
+      </blockquote>
+      <p><a href={`https://github.com/conanxin/2015-Projects/blob/master/${encodeURIComponent(seed.data.originalDocument)}`}>→ 阅读完整原始文档</a></p>
+      <p class="card__meta">摘要日期：{seed.data.lastReviewed}</p>
+    </section>
+  </article>
+</BaseLayout>
