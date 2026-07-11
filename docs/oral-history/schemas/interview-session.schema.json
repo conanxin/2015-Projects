@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://conanxin.github.io/2015-Projects/docs/oral-history/schemas/interview-session.schema.json",
+  "title": "interview-session",
+  "description": "Per-session metadata for the oral-history work package. Stays in Level 0 / Level 1 working.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "sessionId",
+    "projectId",
+    "sessionNumber",
+    "date",
+    "narratorCode",
+    "recording",
+    "consentAtSession"
+  ],
+  "properties": {
+    "sessionId": {
+      "type": "string",
+      "pattern": "^OH-[0-9]{4}-[0-9]{3}-S[0-9]{2}$"
+    },
+    "projectId": {
+      "type": "string",
+      "pattern": "^OH-[0-9]{4}-[0-9]{3}$"
+    },
+    "sessionNumber": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "narratorCode": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]+$"
+    },
+    "recording": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["made", "format"],
+      "properties": {
+        "made": {
+          "type": "boolean"
+        },
+        "format": {
+          "type": "string",
+          "enum": [
+            "wav-4416-mono-16",
+            "wav-480-mono-16",
+            "mp4",
+            "wav-other",
+            "video-mp4",
+            "no-recording"
+          ]
+        },
+        "durationSeconds": {
+          "type": "number",
+          "minimum": 0
+        },
+        "primaryDevice": {
+          "type": "string"
+        },
+        "backupDevice": {
+          "type": "string"
+        },
+        "filenameRawAudio": {
+          "type": "string",
+          "pattern": "^OH-[0-9]{4}-[0-9]{3}-S[0-9]{2}_raw-audio_[0-9]{4}-[0-9]{2}-[0-9]{2}\\.(wav|mp3|flac|m4a)$"
+        }
+      }
+    },
+    "consentAtSession": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["recordingPermissionId"],
+      "properties": {
+        "recordingPermissionId": {
+          "type": "string",
+          "pattern": "^OH-[0-9]{4}-[0-9]{3}_recording-permission_v[0-9]+$"
+        },
+        "aiProcessingOptionsId": {
+          "type": "string",
+          "pattern": "^OH-[0-9]{4}-[0-9]{3}_ai-processing-options_v[0-9]+$"
+        },
+        "interviewBoundariesId": {
+          "type": "string",
+          "pattern": "^OH-[0-9]{4}-[0-9]{3}_interview-boundaries_v[0-9]+$"
+        }
+      }
+    },
+    "transcriptHash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 of transcript file. NEVER the transcript itself."
+    },
+    "timecodeHash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "redactionLogPath": {
+      "type": "string",
+      "description": "Internal path inside oral-history-private/. NEVER public."
+    },
+    "sensitiveMarkersCount": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of [经讲述者要求删除] markers. Kept as a count, not as a list."
+    }
+  }
+}

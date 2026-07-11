@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://conanxin.github.io/2015-Projects/docs/oral-history/schemas/publication-decision.schema.json",
+  "title": "publication-decision",
+  "description": "Publication decision metadata. Approved only when the four approval fields are all present and the narrator has signed the matching publication-approval version.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "decisionId",
+    "projectId",
+    "decisionVersion",
+    "approvedAt",
+    "approvedByNarrator",
+    "editorVerified",
+    "nameDisplayMode",
+    "indexingAllowed",
+    "approvedFields",
+    "approvedSegments",
+    "approvedMedia",
+    "approvedImages"
+  ],
+  "properties": {
+    "decisionId": {
+      "type": "string",
+      "pattern": "^OH-[0-9]{4}-[0-9]{3}-S[0-9]{2}_publication-decision_v[0-9]+$"
+    },
+    "projectId": {
+      "type": "string",
+      "pattern": "^OH-[0-9]{4}-[0-9]{3}$"
+    },
+    "decisionVersion": {
+      "type": "string",
+      "pattern": "^v[0-9]+$",
+      "description": "Monotonic. Future versions must redo all of Review A/B/C."
+    },
+    "approvedAt": {
+      "type": "string",
+      "format": "date"
+    },
+    "approvedByNarrator": {
+      "type": "boolean"
+    },
+    "editorVerified": {
+      "type": "boolean"
+    },
+    "nameDisplayMode": {
+      "type": "string",
+      "enum": ["real-name", "pseudonym", "anonymous"]
+    },
+    "indexingAllowed": {
+      "type": "boolean"
+    },
+    "approvedFields": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["title", "summary", "narratorName", "interviewerName", "interviewDate",
+                 "location", "archiveName", "collectionName", "durationSeconds",
+                 "topics", "people", "places", "events"]
+      }
+    },
+    "approvedSegments": {
+      "type": "array",
+      "items": { "type": "integer", "minimum": 1 },
+      "description": "Chapter numbers approved for publication."
+    },
+    "approvedMedia": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["url", "type"],
+        "properties": {
+          "url": { "type": "string", "format": "uri" },
+          "type": { "type": "string", "enum": ["audio", "video", "image", "document"] },
+          "provider": { "type": "string" },
+          "hostedInRepo": { "type": "boolean", "description": "If true, file is in repo (fails Gate 4 if real). For real family stories this MUST be false." }
+        }
+      }
+    },
+    "approvedImages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path"],
+        "properties": {
+          "path": { "type": "string" },
+          "caption": { "type": "string" }
+        }
+      }
+    },
+    "embargoUntil": {
+      "type": "string",
+      "format": "date"
+    },
+    "linksToExternalArchives": {
+      "type": "array",
+      "items": { "type": "string", "format": "uri" }
+    },
+    "supersedesVersion": {
+      "type": "string",
+      "pattern": "^v[0-9]+$"
+    }
+  }
+}

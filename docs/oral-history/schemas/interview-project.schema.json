@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://conanxin.github.io/2015-Projects/docs/oral-history/schemas/interview-project.schema.json",
+  "title": "interview-project",
+  "description": "Interview project-level metadata for the 2015 Projects Reborn oral-history work package. This is an operational schema, not a legal contract.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "projectId",
+    "title",
+    "status",
+    "narratorCode",
+    "createdAt",
+    "projectOwner",
+    "privacyLevel",
+    "publicationStatus",
+    "withdrawalStatus"
+  ],
+  "properties": {
+    "projectId": {
+      "type": "string",
+      "pattern": "^OH-[0-9]{4}-[0-9]{3}$",
+      "description": "OH-YYYY-NNN identifier."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "description": "Project title (Chinese, English, or both)."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "planned",
+        "consented",
+        "recorded",
+        "transcribing",
+        "narrator-review",
+        "approved-private",
+        "approved-public",
+        "embargoed",
+        "withdrawn",
+        "closed"
+      ]
+    },
+    "narratorCode": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]+$",
+      "description": "Pseudonym / codename. NEVER a real name."
+    },
+    "publicDisplayName": {
+      "type": "string",
+      "maxLength": 100,
+      "description": "Display name on the public page (pseudonym, never real name)."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date",
+      "description": "ISO 8601 YYYY-MM-DD."
+    },
+    "projectOwner": {
+      "type": "string",
+      "description": "Operator ID (e.g. editor-001)."
+    },
+    "privacyLevel": {
+      "type": "integer",
+      "enum": [0, 1, 2, 3],
+      "description": "0=raw private, 1=working, 2=approved, 3=public."
+    },
+    "consentRecordId": {
+      "type": "string",
+      "pattern": "^OH-[0-9]{4}-[0-9]{3}_consent_v[0-9]+$",
+      "description": "consent-record filename without extension."
+    },
+    "sessions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^OH-[0-9]{4}-[0-9]{3}-S[0-9]{2}$"
+      },
+      "description": "Session IDs."
+    },
+    "publicationStatus": {
+      "type": "string",
+      "enum": [
+        "not-applicable",
+        "draft",
+        "narrator-review",
+        "approved-private",
+        "approved-public",
+        "embargoed",
+        "withdrawn"
+      ]
+    },
+    "withdrawalStatus": {
+      "type": "string",
+      "enum": [
+        "not-requested",
+        "received",
+        "in-progress",
+        "completed",
+        "external-copies-pending"
+      ]
+    },
+    "realNameMapLocation": {
+      "type": "string",
+      "description": "Path inside oral-history-private/. NEVER published."
+    },
+    "withdrawalContactLocation": {
+      "type": "string",
+      "description": "Path inside oral-history-private/. NEVER published."
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 4000
+    }
+  }
+}

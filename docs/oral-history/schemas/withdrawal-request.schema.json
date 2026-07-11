@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://conanxin.github.io/2015-Projects/docs/oral-history/schemas/withdrawal-request.schema.json",
+  "title": "withdrawal-request",
+  "description": "Withdrawal or change request metadata. Stays in Level 0; NEVER published in the public repository.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "requestId",
+    "projectId",
+    "receivedAt",
+    "scope",
+    "affectedPublications",
+    "actionTaken",
+    "completedAt",
+    "status"
+  ],
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "pattern": "^OH-[0-9]{4}-[0-9]{3}-W[0-9]+$",
+      "description": "OH-YYYY-NNN-WNNN where WNNN is the withdrawal number."
+    },
+    "projectId": {
+      "type": "string",
+      "pattern": "^OH-[0-9]{4}-[0-9]{3}$"
+    },
+    "receivedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "scope": {
+      "type": "string",
+      "enum": [
+        "full-take-down",
+        "partial-take-down",
+        "modify-segment",
+        "modify-identity",
+        "modify-publication-form",
+        "modify-ai-options"
+      ]
+    },
+    "affectedPublications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind"],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": ["public-page", "audio-link", "video-link", "excerpt", "all-public"]
+          },
+          "slug": { "type": "string" },
+          "version": { "type": "string", "pattern": "^v[0-9]+$" }
+        }
+      }
+    },
+    "actionTaken": {
+      "type": "string",
+      "description": "Short description, e.g. 'removed slugs isadore-first-tomato; rebuilt; deployed v02'."
+    },
+    "completedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "unresolvedExternalCopies": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "search-engine-cache",
+          "web-archive-org",
+          "social-media-repost",
+          "rss-reader-cache",
+          "third-party-newsletter"
+        ]
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "received",
+        "in-progress",
+        "completed-controllable",
+        "completed-with-external-pending",
+        "rejected-by-validation",
+        "cancelled-by-narrator"
+      ]
+    },
+    "validationOutcome": {
+      "type": "string",
+      "enum": ["PASS", "FAIL"]
+    },
+    "narratorVerifiedBy": {
+      "type": "string",
+      "description": "Pre-agreed channel used for identity verification."
+    },
+    "documentsRetainedLevel": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Withdrawal log + session-level summary only; never raw."
+    }
+  }
+}

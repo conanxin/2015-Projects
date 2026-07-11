@@ -13,6 +13,8 @@
 | **Live Site（项目谱系站）** | <https://conanxin.github.io/2015-Projects/> |
 | **Project Timeline** | <https://conanxin.github.io/2015-Projects/timeline/> |
 | **Lineage Map** | <https://conanxin.github.io/2015-Projects/lineage/> |
+| **Stories（公开口述历史 Pilot）** | <https://conanxin.github.io/2015-Projects/stories/> |
+| **Oral-history governance kit** | [`docs/oral-history/`](./docs/oral-history/) |
 
 ## 这是什么
 
@@ -50,7 +52,8 @@
 - **2015–2016**：[`2015-Daily-Recording`](https://github.com/conanxin/2015-Daily-Recording) 与 [`2016-Daily-Recording`](https://github.com/conanxin/2016-Daily-Recording) 两次公开日记实验都尝试过每日更新，到 2016 年初自陈「计划是美好的，但现实是残酷的」；
 - **2026-04–06**：阅读侧、写作侧、知识库侧、播客侧的多个后继仓库陆续出现；
 - **2026-07**：复兴审计 + 项目谱系静态站 + GitHub Pages 发布；
-- **下一阶段**：P4 家庭口述历史单样本 Pilot（V0.2）。
+- **2026-07**：V0.2 公开口述历史 Pilot 上线（NPS / Isadore Samet / First Tomato）；
+- **下一阶段**：V0.3 — 真实家庭访谈前的治理工作包（`docs/oral-history/`）。
 
 不写无法验证的精确日期。
 
@@ -141,12 +144,12 @@ npm run build
 
 ## Roadmap
 
-- **Current** — V0.1C：仓库入口复兴（README + 历史档案 + GitHub About 更新）
-- **Next** — V0.2：家庭口述历史单样本 Pilot
-  - 一位讲述者，一次访谈，一个故事页面
-  - 只使用可公开使用的材料，不引入真实家庭成员，不建立 Wiki / 账号 / 多人系统
-  - 验证内容模型、时间码、来源、阅读体验
-- **Later** — 广播传播层（《万物小窗》Podcast RSS 升级）；开放阅读连接（电子书能力层联动）；设计链接维护实验（`tools/link_audit.py` 季度化）
+- **Current** — V0.3：家庭口述历史治理工作包
+  - 详见 [`docs/oral-history/`](docs/oral-history/)
+  - 包含 15 份治理文档、11 份模板、5 份 JSON Schema 与 1 份本地 validator
+  - V0.2 公开口述历史 Pilot 已完成
+- **Next** — V0.4：interview-readiness dry run（不涉及第三方隐私）
+- **Later** — 真实家庭访谈 Pilot（待 V0.4 dry run 通过）
 
 ## Research and Reports
 

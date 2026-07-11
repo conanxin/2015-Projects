@@ -41,3 +41,16 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# =========================
+# Private oral-history working materials (V0.3)
+# These directories hold Level 0 / Level 1 content per
+# docs/oral-history/08-data-classification-and-storage.md and
+# must NEVER enter the public repository history.
+# Do NOT generalise to *.mp3 / *.wav / *.mp4 — approved public
+# audio assets may still be referenced from site/src/content/.
+# =========================
+oral-history-private/
+oral-history-working/
+consent-records/
+identity-maps/

@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://conanxin.github.io/2015-Projects/docs/oral-history/schemas/participant-consent.schema.json",
+  "title": "participant-consent",
+  "description": "Participant consent record metadata. NEVER published. NEVER include real PII in example values.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "consentId",
+    "projectId",
+    "version",
+    "consentDate",
+    "recordingAudio",
+    "recordingVideo",
+    "humanTranscription",
+    "localAiTranscription",
+    "cloudAiTranscription",
+    "cloudLlmProcessing",
+    "translation",
+    "publicAudio",
+    "publicTranscript",
+    "publicExcerpts",
+    "publicSummary",
+    "publicImages",
+    "realName",
+    "pseudonym",
+    "anonymous",
+    "searchIndexing",
+    "rssDistribution",
+    "socialExcerpts",
+    "narratorReviewRequired",
+    "withdrawalContactMethod"
+  ],
+  "properties": {
+    "consentId": {
+      "type": "string",
+      "pattern": "^OH-[0-9]{4}-[0-9]{3}_consent_v[0-9]+$"
+    },
+    "projectId": {
+      "type": "string",
+      "pattern": "^OH-[0-9]{4}-[0-9]{3}$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^v[0-9]+$"
+    },
+    "consentDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "recordingAudio": {
+      "type": "boolean"
+    },
+    "recordingVideo": {
+      "type": "boolean"
+    },
+    "humanTranscription": {
+      "type": "boolean"
+    },
+    "localAiTranscription": {
+      "type": "boolean",
+      "description": "Local-only whisper.cpp etc. Default true; cloud needs separate consent."
+    },
+    "cloudAiTranscription": {
+      "type": "boolean",
+      "description": "Cloud STT — needs separate explicit consent."
+    },
+    "cloudLlmProcessing": {
+      "type": "boolean",
+      "description": "Cloud LLM (OpenAI/Anthropic/Google) processing — separate consent."
+    },
+    "translation": {
+      "type": "boolean"
+    },
+    "publicAudio": {
+      "type": "boolean",
+      "description": "Whether the audio may be embedded on a public page."
+    },
+    "publicTranscript": {
+      "type": "boolean",
+      "description": "Whether the full transcript may be published."
+    },
+    "publicExcerpts": {
+      "type": "boolean"
+    },
+    "publicSummary": {
+      "type": "boolean"
+    },
+    "publicImages": {
+      "type": "boolean"
+    },
+    "realName": {
+      "type": "boolean",
+      "description": "Whether the narrator's real name may be published."
+    },
+    "pseudonym": {
+      "type": "string",
+      "description": "Pseudonym if realName=false; codename if anonymous=true."
+    },
+    "anonymous": {
+      "type": "boolean",
+      "description": "If true, all identity is reduced to a codename."
+    },
+    "searchIndexing": {
+      "type": "boolean",
+      "description": "Allow search engines to index."
+    },
+    "rssDistribution": {
+      "type": "boolean"
+    },
+    "socialExcerpts": {
+      "type": "boolean"
+    },
+    "embargoUntil": {
+      "type": "string",
+      "format": "date",
+      "description": "If set, page cannot go public before this date."
+    },
+    "narratorReviewRequired": {
+      "type": "boolean",
+      "description": "true forces Gate 3 before any publish."
+    },
+    "withdrawalContactMethod": {
+      "type": "string",
+      "enum": ["email", "phone", "in-person", "postal-letter", "trusted-intermediary"],
+      "description": "Pre-agreed channel; never include the actual address/phone here."
+    },
+    "voiceCloningConsented": {
+      "type": "boolean",
+      "description": "Opt-in only. Defaults to false even when not present."
+    },
+    "modelTrainingConsented": {
+      "type": "boolean",
+      "description": "Opt-in only. Defaults to false."
+    },
+    "trainingOrChatbotInclusion": {
+      "type": "boolean"
+    },
+    "crossProjectReuseConsented": {
+      "type": "boolean"
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 4000
+    }
+  }
+}
