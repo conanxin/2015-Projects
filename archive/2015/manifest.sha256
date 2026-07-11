@@ -1,0 +1,39 @@
+# 2015-Projects original file manifest (byte-level)
+
+This manifest records the SHA-256 of each original 2015 file in this
+repository, computed from the Git object at the historical source commit.
+Use this to verify that `archive/2015/README.original.md` and the four
+project documents still match byte-for-byte.
+
+- Historical source commit: `dc8e86e7a6aa4f8dab44c381a912b29dd825d085`
+- Historical source commit message: `:neckbeard: Added .gitattributes & .gitignore files` (initial), then `add notes`, `add note`, `add a project` for the README + four documents.
+- Historical commit date: 2015-01-03 .. 2015-01-12 (UTC, from `git log --pretty='%h %ad %s' --date=short`)
+
+All SHA-256 values below are taken directly from `git cat-file blob <sha>:<path>`
+to guarantee they reflect the historical Git object, not the current working tree.
+
+path                            original SHA-256 (from Git object)
+----------------------------------------------------------------------------------------------------
+README.md                       3c630b3a644660c8e1ac9e1a948c6cd33fa62dc33867b716e9e4a35d507efbba
+1.Podcast-Plan.md               98d2580d48a1498e531265676fdc9e0649f260cd2d2d9ddbd238d39c7e7cd8b0
+2.E-Reader.md                   1c6551563df132c8673a7d794b92b97abb87992f6d75005a29a0926dc5a3dc36
+3.DESIGNING For The Web.md      6a562415efe31a16638fb51d89b0236c47675d2820b92770612dc1ac44f9928c
+4.Recordingl history.md         7bf48c923edee4837b325b755e606d6b711458763587ea82cc02aac8eb4eee5b
+
+Total entries: 5
+
+Verification rule:
+
+- The four project documents (`1.Podcast-Plan.md`, `2.E-Reader.md`,
+  `3.DESIGNING For The Web.md`, `4.Recordingl history.md`) must remain at
+  their original paths in the repository root and their contents must still
+  match the original SHA-256 above.
+- The original README must remain available as a byte-level archive at
+  `archive/2015/README.original.md` and its SHA-256 must equal the entry
+  for `README.md` above (`3c630b3a644660c8e1ac9e1a948c6cd33fa62dc33867b716e9e4a35d507efbba`).
+- The root `README.md` is **not** required to match this manifest. From
+  V0.1C onward, the root README is the modern project entry and is allowed
+  to diverge; the byte-level original is preserved at the path above.
+
+Generated on 2026-07-11 as part of V0.1C (README revival).
+
