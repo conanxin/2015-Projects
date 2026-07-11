@@ -53,7 +53,9 @@
 - **2026-04–06**：阅读侧、写作侧、知识库侧、播客侧的多个后继仓库陆续出现；
 - **2026-07**：复兴审计 + 项目谱系静态站 + GitHub Pages 发布；
 - **2026-07**：V0.2 公开口述历史 Pilot 上线（NPS / Isadore Samet / First Tomato）；
-- **下一阶段**：V0.3 — 真实家庭访谈前的治理工作包（`docs/oral-history/`）。
+- **2026-07**：V0.3 家庭口述历史治理工作包（15 治理文档 + 11 模板 + 5 JSON Schema + 1 validator）；
+- **2026-07**：V0.4A 合成 dry-run fixture（`OH-2026-900`，回放 Gate 0–5 + 撤回 + 4 字段回环验证），不发布故事页；
+- **下一阶段**：V0.4B — 不涉及第三方隐私、默认不公开的真实自我访谈 dry run。
 
 不写无法验证的精确日期。
 
@@ -144,12 +146,12 @@ npm run build
 
 ## Roadmap
 
-- **Current** — V0.3：家庭口述历史治理工作包
-  - 详见 [`docs/oral-history/`](docs/oral-history/)
-  - 包含 15 份治理文档、11 份模板、5 份 JSON Schema 与 1 份本地 validator
-  - V0.2 公开口述历史 Pilot 已完成
-- **Next** — V0.4：interview-readiness dry run（不涉及第三方隐私）
-- **Later** — 真实家庭访谈 Pilot（待 V0.4 dry run 通过）
+- **Current** — V0.4A：合成 dry-run fixture（`OH-2026-900`）
+  - 详见 [`fixtures/synthetic-oh-2026-900/`](fixtures/synthetic-oh-2026-900/)
+  - 含 16 份 markdown + 4 份 fixture JSON + 1 份 `validate-fixture.mjs`，零真实资料
+  - 验证 17 检查通过；负例 10 errors / exit 1
+- **Next** — V0.4B：真实自我访谈 dry run（不涉及第三方隐私，默认不公开）
+- **Later** — 真实家庭访谈 Pilot（仅在 V0.4B 通过 + governance 人工审阅后）
 
 ## Research and Reports
 
@@ -157,7 +159,10 @@ npm run build
 - R0 链接审计 CSV：[`reports/2026_link_audit_raw.csv`](./reports/2026_link_audit_raw.csv)
 - V0.1A 站点开发报告：[`reports/v0_1a_lineage_site_report.md`](./reports/v0_1a_lineage_site_report.md)
 - V0.1B Pages 部署报告：[`reports/v0_1b_github_pages_deployment_report.md`](./reports/v0_1b_github_pages_deployment_report.md)
-- V0.1C README 复兴报告（本阶段）：[`reports/v0_1c_readme_revival_report.md`](./reports/v0_1c_readme_revival_report.md)
+- V0.1C README 复兴报告：[`reports/v0_1c_readme_revival_report.md`](./reports/v0_1c_readme_revival_report.md)
+- V0.2B 公共口述历史 Pilot 报告：[`reports/v0_2b_public_oral_history_pilot_report.md`](./reports/v0_2b_public_oral_history_pilot_report.md)
+- V0.3 家庭口述历史治理工作包报告：[`reports/v0_3_family_oral_history_governance_report.md`](./reports/v0_3_family_oral_history_governance_report.md)
+- V0.4A 合成 dry-run fixture 报告（本阶段）：[`reports/v0_4a_synthetic_dry_run_report.md`](./reports/v0_4a_synthetic_dry_run_report.md)
 
 ## License
 

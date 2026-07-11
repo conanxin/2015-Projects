@@ -1,0 +1,23 @@
+{
+  "$schema": "../../docs/oral-history/schemas/interview-session.schema.json",
+  "title": "Synthetic Dry Run Interview Session OH-2026-900-S001",
+  "type": "object",
+  "sessionId": "OH-2026-900-S001",
+  "projectCode": "OH-2026-900",
+  "narratorCode": "SYNTHETIC-NARRATOR-001",
+  "interviewerCode": "[OP-self]",
+  "startedAt": "[YYYY-MM-DDTHH:MM:SSZ]",
+  "endedAt": "[YYYY-MM-DDTHH:MM:SSZ]",
+  "durationMinutes": 0,
+  "medium": "text-only",
+  "audioCaptured": false,
+  "rawRecordingLocation": "oral-history-private/OH-2026-900/raw/ [placeholder, must NOT exist in public repo]",
+  "transcriptRawLocation": "oral-history-working/OH-2026-900/transcript-raw.md [placeholder, must NOT exist in public repo]",
+  "transcriptEditedLocation": "fixtures/synthetic-oh-2026-900/transcript-edited.md",
+  "emotionallyDifficultTopics": [],
+  "technicalIssues": "[none — placeholder]",
+  "consentChangedDuringSession": false,
+  "status": "transcribing",
+  "synthetic": true,
+  "notes": "Synthetic dry run only. Audio is explicitly false. Status field carries one of the 10 schema enum values."
+}

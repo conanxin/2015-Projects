@@ -116,5 +116,23 @@ unresolved_external_copies: web.archive.org 已抓取 / social-media 已转推
 
 撤回不是隐私策略；隐私策略必须从**资料分类**那一层就避免敏感
 内容流入公开仓库。这就是 `08-data-classification-and-storage.md`
-存在的原因，也是 `15-ai-processing-policy.md` 默认禁用声音克隆
+存在的原因，也是 `15-ai-processing-policy.md`默认禁用声音克隆
 和模型训练的原因。
+
+## 4.7 反向追溯在 fixture-only 项目上的适用性
+
+V0.4A 的 `fixtures/synthetic-oh-2026-900/` 在没有真实公开页面的
+情况下完成了一次"on-paper approved-public → withdrawn"反向追溯
+（见 `withdrawal-request.md` § Request 1 + `gate-traceability-table.md`
+第 10 行）。这证明了反向追溯结构本身是**在 markdown / schema 里**
+落地的，不依赖于"必须存在过一篇 Astro 页面"才能记录。
+
+对 V0.4A 之后所有真实项目，这意味着：
+
+- **不存在**的真实发布，不需要经过"先撤销 commit → 然后再撤回"
+  的两阶段动作；只要把 `publication-decision` 的 `decision` 字段
+  从 `approved-public` 改写为 `withdrawn` 并 append 一条
+  `gate-traceability-table.md` 行就足够了。
+- 真实的已公开页面，回退步骤仍然要按 § 4.2 步骤 5 全量执行；但
+  **记录侧**（`withdrawal-request.md` + 表格）即使在 vite
+  `site/dist/` 已被推送到 Pages 之前也能正确反映。

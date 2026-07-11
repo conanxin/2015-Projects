@@ -1,0 +1,12 @@
+{
+  "$schema": "../../docs/oral-history/schemas/interview-project.schema.json",
+  "title": "Synthetic Dry Run Interview Project OH-2026-900",
+  "type": "object",
+  "projectCode": "OH-2026-900",
+  "narratorCode": "SYNTHETIC-NARRATOR-001",
+  "status": "approved-public",
+  "topicSynthetic": "How the 2015 Projects Reborn idea evolved from a static idea list into a personal knowledge & memory laboratory.",
+  "createdAt": "[YYYY-MM-DDTHH:MM:SSZ]",
+  "synthetic": true,
+  "notes": "Synthetic dry run only. Will be exercised through every schema field that allows placeholder values; will never publish to the public Astro site."
+}
