@@ -1,0 +1,157 @@
+[
+  {
+    "id": "s1",
+    "startSeconds": 0.5,
+    "endSeconds": 5.5,
+    "titleZh": "哥哥的特别安排",
+    "titleOriginal": "A treat from his brother",
+    "summaryZh": "哥哥带 Isadore 出门，想给他一次特别的体验。",
+    "transcriptExcerptOriginal": "give me",
+    "transcriptExcerptZh": "给我",
+    "topics": [
+      "family-memory",
+      "brotherhood"
+    ],
+    "people": [
+      "Isadore Samet"
+    ],
+    "places": [],
+    "sourceReference": "NPS Ellis Island oral history EI-87, audio 0.5s-5.5s",
+    "verificationStatus": "verified",
+    "confidence": 1.0,
+    "editorialNote": "Opening clause; quoted for navigation only."
+  },
+  {
+    "id": "s2",
+    "startSeconds": 5.5,
+    "endSeconds": 11.5,
+    "titleZh": "街角的番茄小贩",
+    "titleOriginal": "Tomatoes at the peddlers' corner",
+    "summaryZh": "哥哥指着街角的小贩介绍，那是番茄。",
+    "transcriptExcerptOriginal": "peddlers",
+    "transcriptExcerptZh": "小贩",
+    "topics": [
+      "first-food",
+      "street-life"
+    ],
+    "people": [
+      "Isadore Samet"
+    ],
+    "places": [
+      "New York"
+    ],
+    "sourceReference": "NPS Ellis Island oral history EI-87, audio 5.5s-11.5s",
+    "verificationStatus": "verified",
+    "confidence": 1.0,
+    "editorialNote": "Bridge sentence; only the anchor noun kept."
+  },
+  {
+    "id": "s3",
+    "startSeconds": 11.5,
+    "endSeconds": 14.0,
+    "titleZh": "从未吃过番茄",
+    "titleOriginal": "Never tasted a tomato before",
+    "summaryZh": "Isadore 在此之前从未吃过番茄。",
+    "transcriptExcerptOriginal": "tomato",
+    "transcriptExcerptZh": "番茄",
+    "topics": [
+      "first-food"
+    ],
+    "people": [
+      "Isadore Samet"
+    ],
+    "places": [],
+    "sourceReference": "NPS Ellis Island oral history EI-87, audio 11.5s-14.0s",
+    "verificationStatus": "verified",
+    "confidence": 1.0,
+    "editorialNote": "Standalone clause."
+  },
+  {
+    "id": "s4",
+    "startSeconds": 14.0,
+    "endSeconds": 22.0,
+    "titleZh": "不知番茄长什么样",
+    "titleOriginal": "Not knowing what a tomato looks like",
+    "summaryZh": "他甚至不知道番茄长什么样；说到这里他自己笑了。",
+    "transcriptExcerptOriginal": "didn't know",
+    "transcriptExcerptZh": "不知道",
+    "topics": [
+      "first-food",
+      "laughter"
+    ],
+    "people": [
+      "Isadore Samet"
+    ],
+    "places": [],
+    "sourceReference": "NPS Ellis Island oral history EI-87, audio 14.0s-22.0s",
+    "verificationStatus": "verified",
+    "confidence": 1.0,
+    "editorialNote": "Includes the narrator's laugh; the laugh itself is not transcribed."
+  },
+  {
+    "id": "s5",
+    "startSeconds": 22.0,
+    "endSeconds": 30.0,
+    "titleZh": "咬下立即吐出",
+    "titleOriginal": "A bite, then spit it out",
+    "summaryZh": "哥哥递给他一个番茄，他咬下去立刻吐了出来。",
+    "transcriptExcerptOriginal": "take it",
+    "transcriptExcerptZh": "吃不下",
+    "topics": [
+      "first-food",
+      "sensory-memory"
+    ],
+    "people": [
+      "Isadore Samet"
+    ],
+    "places": [],
+    "sourceReference": "NPS Ellis Island oral history EI-87, audio 22.0s-30.0s",
+    "verificationStatus": "verified",
+    "confidence": 1.0,
+    "editorialNote": "Action phrase; full sentence not stored."
+  },
+  {
+    "id": "s6",
+    "startSeconds": 30.0,
+    "endSeconds": 36.0,
+    "titleZh": "困惑的反问",
+    "titleOriginal": "What did they give me to eat?",
+    "summaryZh": "Isadore 困惑地问哥哥，给的究竟是什么。",
+    "transcriptExcerptOriginal": "what is this",
+    "transcriptExcerptZh": "这是什么",
+    "topics": [
+      "first-food",
+      "laughter"
+    ],
+    "people": [
+      "Isadore Samet"
+    ],
+    "places": [],
+    "sourceReference": "NPS Ellis Island oral history EI-87, audio 30.0s-36.0s",
+    "verificationStatus": "verified",
+    "confidence": 1.0,
+    "editorialNote": "Mid-paragraph excerpt; the narrator laughs before this line."
+  },
+  {
+    "id": "s7",
+    "startSeconds": 36.0,
+    "endSeconds": 41.5,
+    "titleZh": "哥哥笑，他们继续走",
+    "titleOriginal": "They kept walking, no more tomato",
+    "summaryZh": "哥哥笑出声，他们继续往前走，没有再要番茄。",
+    "transcriptExcerptOriginal": "no tomato",
+    "transcriptExcerptZh": "没番茄",
+    "topics": [
+      "family-memory",
+      "laughter"
+    ],
+    "people": [
+      "Isadore Samet"
+    ],
+    "places": [],
+    "sourceReference": "NPS Ellis Island oral history EI-87, audio 36.0s-41.5s",
+    "verificationStatus": "verified",
+    "confidence": 1.0,
+    "editorialNote": "Closing clause; bridge phrase only."
+  }
+]

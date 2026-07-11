@@ -1,0 +1,104 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+type StoryEntry = CollectionEntry<'stories'>;
+
+const stories: StoryEntry[] = (await getCollection('stories')).sort((a: StoryEntry, b: StoryEntry) =>
+  a.data.id.localeCompare(b.data.id)
+);
+
+function formatDuration(totalSeconds: number): string {
+  const m = Math.floor(totalSeconds / 60);
+  const s = totalSeconds - m * 60;
+  return `${m.toString().padStart(1, '0')}:${s.toFixed(2).padStart(5, '0')}`;
+}
+---
+<BaseLayout
+  title="公开口述历史 Pilot · 2015 Projects Reborn"
+  pathname="/stories"
+  description="把口述历史从一个主题、章节或关键词，快速定位并播放讲述者录音中的对应时刻。本 Pilot 只有一个公开样本：Isadore Samet / First Tomato。"
+>
+  <section class="section">
+    <h1>公开口述历史 Pilot</h1>
+    <p class="section__lede">
+      这是「2015 Projects Reborn」的<span style="font-weight:600">产品模型验证</span>，
+      不是一个完整的口述历史馆藏。我们关心的问题是——读者能否从一个主题、章节或
+      一段文字片段，快速跳到讲述者录音中对应的那个时刻。
+    </p>
+    <p>
+      目前<strong>只有一个</strong>公开样本。它来自美国国家公园管理局（National Park Service）
+      的 <a href="https://www.nps.gov/elis/learn/historyculture/index.htm">Ellis Island 口述历史馆藏</a>，
+      是 1991 年访谈的一段 41.8 秒录音。本仓库不托管录音，也不存储完整转录，只保留
+      7 个时间码章节 + 中文编辑摘要 + 短摘录，供跳转和阅读。
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="pilot-samples-heading">
+    <h2 id="pilot-samples-heading">已收录样本</h2>
+    <div class="cards">
+      {stories.map((s) => (
+        <article class="story-card">
+          <h3 class="story-card__title">
+            {s.data.titleZh}
+            <small>{s.data.titleOriginal}</small>
+          </h3>
+          <dl class="story-meta-grid">
+            <dt>讲述者</dt>
+            <dd>{s.data.narratorName}</dd>
+            <dt>采访人</dt>
+            <dd>{s.data.interviewerName}</dd>
+            <dt>采访日期</dt>
+            <dd>
+              <time datetime={s.data.interviewDate}>{s.data.interviewDate}</time>
+            </dd>
+            <dt>档案</dt>
+            <dd>{s.data.archiveName} · <a href={s.data.sourceUrl}>Ellis Island Collection ({s.data.collectionName})</a></dd>
+            <dt>时长</dt>
+            <dd>{formatDuration(s.data.durationSeconds)} (约 {s.data.durationSeconds.toFixed(2)} 秒)</dd>
+            <dt>媒体</dt>
+            <dd>
+              <code>{s.data.mediaProvider}</code> · <a href={s.data.mediaUrl}>公开 MP3</a>
+            </dd>
+            <dt>主题</dt>
+            <dd>
+              {s.data.topics.map((t: string) => (
+                <span class="role-tag">{t}</span>
+              ))}
+            </dd>
+            <dt>编辑状态</dt>
+            <dd>{s.data.editorialStatus}</dd>
+          </dl>
+          <p>{s.data.summary}</p>
+          <a class="card__link" href={`/stories/${s.data.slug}/`}>
+            进入故事页（七章节时间码）→
+          </a>
+          <p class="card__meta">
+            官方源页：
+            <a href={s.data.sourceUrl}>{s.data.sourceUrl}</a>
+          </p>
+        </article>
+      ))}
+    </div>
+    {stories.length === 0 && (
+      <p>暂无收录样本。</p>
+    )}
+  </section>
+
+  <section class="section" aria-labelledby="what-this-pilot-heading">
+    <h2 id="what-this-pilot-heading">这个 Pilot 验证的是什么</h2>
+    <ul>
+      <li>一位讲述者（<strong>Isadore Samet</strong>），一次访谈（一段 41.8 秒 NPS 录音），一个故事页面。</li>
+      <li>7 个时间码章节，全部经人工试听 + <code>ffprobe</code> + Chromium <code>seek</code> 三重复核。</li>
+      <li>原生 <code>&lt;audio&gt;</code>，<strong>纯前端</strong>章节搜索，可在中英文之间切换。</li>
+      <li>正式内容仅保留：中文标题、英文标题、中文编辑摘要、英文短摘录（每章 1–6 词，总计 ~13 词）、主题、人物、地点、编辑说明。</li>
+      <li>完整采访转录留在官方 NPS 页面，本仓库<strong>不存储</strong>。</li>
+      <li>录音托管在 NPS 公共 S3 / CloudFront CDN，本仓库<strong>不托管</strong>。</li>
+      <li>如果浏览器、音频或时间码不可用，页面会回退到官方 NPS 源页，<strong>不会</strong>推荐镜像。</li>
+    </ul>
+    <p>
+      返回 <a href="/lineage">/lineage</a> 查看项目谱系，或 <a href="/timeline">/timeline</a> 查看时间线。
+    </p>
+  </section>
+</BaseLayout>

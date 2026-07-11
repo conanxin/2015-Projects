@@ -1,0 +1,416 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const stories: CollectionEntry<'stories'>[] = await getCollection('stories');
+  return stories.map((s: CollectionEntry<'stories'>) => ({
+    params: { slug: s.data.slug },
+    props: { story: s },
+  }));
+}
+
+const { story } = Astro.props as { story: CollectionEntry<'stories'> };
+const data = story.data;
+const segments = (await import(`../../data/stories/${data.slug}.segments.json`)).default;
+
+function formatTime(seconds: number): string {
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds - m * 60);
+  return `${m.toString().padStart(1, '0')}:${s.toString().padStart(2, '0')}`;
+}
+
+function formatDuration(totalSeconds: number): string {
+  const m = Math.floor(totalSeconds / 60);
+  const s = totalSeconds - m * 60;
+  return `${m}:${s.toFixed(2).padStart(5, '0')}`;
+}
+
+// Pre-compute JSON for the client-side search index.
+const clientSegments = segments.map((s: any) => ({
+  id: s.id,
+  startSeconds: s.startSeconds,
+  endSeconds: s.endSeconds,
+  titleZh: s.titleZh,
+  titleOriginal: s.titleOriginal,
+  summaryZh: s.summaryZh,
+  transcriptExcerptOriginal: s.transcriptExcerptOriginal,
+  transcriptExcerptZh: s.transcriptExcerptZh,
+  topics: s.topics || [],
+  people: s.people || [],
+  places: s.places || [],
+}));
+---
+<BaseLayout
+  title={`${data.titleZh} · 公开口述历史 Pilot`}
+  pathname={`/stories/${data.slug}`}
+  description={data.summary}
+>
+  <section class="section">
+    <p>
+      <a href="/stories/">← 返回 Pilot 目录</a>
+    </p>
+    <h1>{data.titleZh}</h1>
+    <p class="section__lede">{data.titleOriginal}</p>
+    <p>
+      {data.summary}
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="meta-heading">
+    <h2 id="meta-heading">采访信息</h2>
+    <dl class="story-meta-grid">
+      <dt>讲述者</dt>
+      <dd>{data.narratorName}</dd>
+      <dt>采访人</dt>
+      <dd>{data.interviewerName}</dd>
+      <dt>采访日期</dt>
+      <dd><time datetime={data.interviewDate}>{data.interviewDate}</time></dd>
+      <dt>地点</dt>
+      <dd>{data.location}</dd>
+      <dt>档案</dt>
+      <dd>
+        {data.archiveName} · {data.collectionName}
+      </dd>
+      <dt>官方源页</dt>
+      <dd><a href={data.sourceUrl}>{data.sourceUrl}</a></dd>
+      <dt>媒体 ID</dt>
+      <dd><code>{data.sourceItemId}</code></dd>
+      <dt>时长</dt>
+      <dd>{formatDuration(data.durationSeconds)}（约 {data.durationSeconds} 秒）</dd>
+      <dt>媒体</dt>
+      <dd><a href={data.mediaUrl}>{data.mediaUrl}</a></dd>
+      <dt>编辑状态</dt>
+      <dd>{data.editorialStatus}</dd>
+    </dl>
+  </section>
+
+  <section class="section" aria-labelledby="audio-heading">
+    <h2 id="audio-heading">聆听本段采访</h2>
+    <div class="audio-block" data-audio-block>
+      <audio
+        controls
+        preload="metadata"
+        src={data.mediaUrl}
+        data-media-url={data.mediaUrl}
+        data-fallback-url={data.sourceUrl}
+      >
+        <a href={data.mediaUrl}>{data.mediaUrl}</a>
+      </audio>
+      <p class="audio-block__note" data-audio-note>
+        录音由 <strong>{data.mediaProvider}</strong> 公开托管，本仓库不拥有也不存储该文件。如播放器异常，
+        请直接访问 <a href={data.sourceUrl}>官方 NPS 源页</a>。
+      </p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="chapters-heading">
+    <h2 id="chapters-heading">七个章节</h2>
+    <p>
+      点击下面的时间码按钮，播放器会跳到对应位置。点击后如果浏览器不让你自动播放，
+      你仍然可以点击音频控件的"播放"按钮继续。当前章节会被高亮，并标注 <code>aria-current</code>。
+    </p>
+
+    <form
+      class="chapter-search"
+      role="search"
+      data-chapter-search
+      aria-label="章节搜索"
+    >
+      <label for="chapter-search-input">搜索章节</label>
+      <input
+        type="search"
+        id="chapter-search-input"
+        name="q"
+        placeholder="关键词（中英文）"
+        data-chapter-search-input
+        autocomplete="off"
+      />
+      <button
+        type="button"
+        data-chapter-search-clear
+        aria-label="清空搜索"
+      >清空</button>
+      <span
+        class="chapter-search__count"
+        data-chapter-search-count
+        aria-live="polite"
+        aria-atomic="true"
+      >7 个章节</span>
+    </form>
+
+    <ol class="chapter-list" data-chapter-list aria-label="章节列表">
+      {segments.map((s: any) => (
+        <li
+          class="chapter"
+          data-chapter
+          data-chapter-id={s.id}
+          data-start={s.startSeconds}
+          data-end={s.endSeconds}
+          data-search-haystack={[
+            s.titleZh,
+            s.titleOriginal,
+            s.summaryZh,
+            s.transcriptExcerptOriginal,
+            s.transcriptExcerptZh,
+            ...(s.topics || []),
+            ...(s.people || []),
+            ...(s.places || []),
+          ].join('\u0001').toLowerCase()}
+        >
+          <div class="chapter__row">
+            <button
+              type="button"
+              class="chapter__time"
+              aria-label={`跳到 ${formatTime(s.startSeconds)}`}
+              data-chapter-jump
+              data-target={s.startSeconds}
+              data-chapter-id={s.id}
+            >{formatTime(s.startSeconds)}</button>
+            <h3 class="chapter__title-zh">{s.titleZh}</h3>
+            <p class="chapter__title-original">{s.titleOriginal}</p>
+          </div>
+          <p class="chapter__summary">{s.summaryZh}</p>
+          <p class="chapter__excerpt-en">
+            <em>原话短摘录：</em>&ldquo;{s.transcriptExcerptOriginal}&rdquo;
+            <span aria-hidden="true"> · </span>
+            <span>{s.transcriptExcerptZh}</span>
+          </p>
+          <dl class="chapter__meta">
+            <span><dt>主题</dt>
+              <dd>{(s.topics || []).join(' · ') || '（无）'}</dd>
+            </span>
+            <span><dt>人物</dt>
+              <dd>{(s.people || []).join(' · ') || '（无）'}</dd>
+            </span>
+            <span><dt>地点</dt>
+              <dd>{(s.places || []).join(' · ') || '（无）'}</dd>
+            </span>
+            <span><dt>来源</dt>
+              <dd><a href={data.sourceUrl}>NPS 源页</a> · {s.sourceReference}</dd>
+            </span>
+            <span><dt>验证</dt>
+              <dd>{s.verificationStatus} · confidence {s.confidence}</dd>
+            </span>
+            <span><dt>编辑</dt>
+              <dd>{s.editorialNote}</dd>
+            </span>
+          </dl>
+        </li>
+      ))}
+    </ol>
+
+    <p class="chapter-empty" data-chapter-empty hidden>
+      没有匹配的章节。请尝试其它关键词。
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="rights-heading">
+    <h2 id="rights-heading">版权与来源</h2>
+    <p>
+      <strong>{data.rightsStatement}</strong>
+    </p>
+    <p>
+      {data.accessNote}
+    </p>
+    <p>
+      <strong>转录来源：</strong>{data.transcriptSource}
+    </p>
+    <p class="card__meta">
+      最后一次编辑审查：<time datetime={data.lastReviewed}>{data.lastReviewed}</time> ·
+      首次发布：<time datetime={data.publishedAt}>{data.publishedAt}</time>
+    </p>
+  </section>
+
+  <section class="section" aria-labelledby="pilot-validated-heading">
+    <h2 id="pilot-validated-heading">这个 Pilot 验证了什么</h2>
+    <ul>
+      <li>章节定位：从 0.5 秒到 41.5 秒的章节边界已用 <code>ffprobe</code> 验证时长，用 Chromium 验证 <code>seek</code> 精度。</li>
+      <li>时间码跳转：点击时间码会调用 <code>audio.currentTime = t</code>，并自动尝试播放。</li>
+      <li>当前章节高亮：<code>timeupdate</code> 事件根据 <code>currentTime</code> 重新计算当前章节，标记 <code>aria-current=&quot;true&quot;</code>。</li>
+      <li>纯前端搜索：在标题、摘要、英文短摘录、中文短译、主题、人物、地点中匹配；不依赖任何后端。</li>
+      <li>外部媒体：mp3 由 NPS 公共 CDN 托管；本仓库不上传、不镜像、不缓存。</li>
+      <li>静态内容模型：Astro Content Collections（stories）+ data JSON（segments）。</li>
+      <li>降级到官方源：播放器或网络异常时，提示用户访问 NPS 官方源页。</li>
+    </ul>
+    <p>
+      接下来要做的事见 <a href="/timeline">/timeline</a> 与 <a href="/about">/about</a>。
+    </p>
+  </section>
+
+  <script type="application/json" data-segments-json set:html={JSON.stringify(clientSegments)} is:inline></script>
+  <script type="application/json" data-story-json set:html={JSON.stringify({
+    slug: data.slug,
+    mediaUrl: data.mediaUrl,
+    fallbackUrl: data.sourceUrl,
+  })} is:inline></script>
+
+  <script is:inline>
+    (function () {
+      'use strict';
+      var root = document.currentScript && document.currentScript.parentElement;
+      while (root && root.tagName !== 'BODY') root = root.parentElement;
+      if (!root) root = document.body;
+
+      function parseJsonScript(selector) {
+        var el = document.querySelector(selector);
+        if (!el) return null;
+        try { return JSON.parse(el.textContent || ''); } catch (_e) { return null; }
+      }
+
+      var audio = root.querySelector('audio[data-media-url]');
+      var audioNote = root.querySelector('[data-audio-note]');
+      var fallbackUrl = audio ? audio.getAttribute('data-fallback-url') : null;
+      var mediaUrl = audio ? audio.getAttribute('data-media-url') : null;
+
+      function onAudioError() {
+        if (!audioNote || !mediaUrl) return;
+        audioNote.innerHTML =
+          '<strong>音频加载失败。</strong>请确认网络可达 <a href="' + mediaUrl + '">' +
+          mediaUrl + '</a>，或直接访问<a href="' + (fallbackUrl || '#') +
+          '">官方 NPS 源页</a>。本仓库不托管该音频。';
+      }
+      if (audio) {
+        audio.addEventListener('error', onAudioError);
+      }
+
+      var list = root.querySelector('[data-chapter-list]');
+      var emptyMsg = root.querySelector('[data-chapter-empty]');
+      var counter = root.querySelector('[data-chapter-search-count]');
+      var input = root.querySelector('[data-chapter-search-input]');
+      var clearBtn = root.querySelector('[data-chapter-search-clear]');
+      var chapters = list ? Array.prototype.slice.call(list.querySelectorAll('[data-chapter]')) : [];
+
+      function chapterActiveStatus() {
+        if (!audio) return null;
+        return { t: audio.currentTime, list: chapters };
+      }
+
+      function setActiveByStart(id) {
+        for (var i = 0; i < chapters.length; i++) {
+          var c = chapters[i];
+          if (c.getAttribute('data-chapter-id') === id) {
+            c.setAttribute('aria-current', 'true');
+            c.classList.add('is-active');
+            var btn = c.querySelector('[data-chapter-jump]');
+            if (btn) btn.setAttribute('aria-current', 'time');
+          } else {
+            c.removeAttribute('aria-current');
+            c.classList.remove('is-active');
+            var btn2 = c.querySelector('[data-chapter-jump]');
+            if (btn2) btn2.removeAttribute('aria-current');
+          }
+        }
+      }
+
+      function updateActiveFromTime() {
+        if (!audio) return;
+        var t = audio.currentTime;
+        var activeId = null;
+        for (var i = 0; i < chapters.length; i++) {
+          var c = chapters[i];
+          var start = parseFloat(c.getAttribute('data-start'));
+          var end = parseFloat(c.getAttribute('data-end'));
+          if (t >= start && t < end) { activeId = c.getAttribute('data-chapter-id'); break; }
+        }
+        if (!activeId && chapters.length) activeId = chapters[chapters.length - 1].getAttribute('data-chapter-id');
+        if (activeId) setActiveByStart(activeId);
+      }
+
+      function seekTo(target) {
+        if (!audio) return;
+        function doSeek() {
+          try {
+            audio.currentTime = target;
+            var p = audio.play();
+            if (p && typeof p.catch === 'function') {
+              p.catch(function () { /* autoplay blocked: keep seek */ });
+            }
+          } catch (e) {
+            // ignore seek errors; do NOT switch media.
+          }
+        }
+        if (audio.readyState >= 1) {
+          doSeek();
+        } else {
+          audio.addEventListener('loadedmetadata', function once() {
+            audio.removeEventListener('loadedmetadata', once);
+            doSeek();
+          });
+          audio.addEventListener('error', function onceE() {
+            audio.removeEventListener('error', onceE);
+          });
+        }
+      }
+
+      // Wire up chapter jump buttons.
+      var jumpBtns = list ? list.querySelectorAll('[data-chapter-jump]') : [];
+      for (var i = 0; i < jumpBtns.length; i++) {
+        jumpBtns[i].addEventListener('click', function (e) {
+          var t = parseFloat(e.currentTarget.getAttribute('data-target'));
+          var id = e.currentTarget.getAttribute('data-chapter-id');
+          if (id) setActiveByStart(id);
+          seekTo(t);
+        });
+      }
+
+      if (audio) {
+        audio.addEventListener('timeupdate', updateActiveFromTime);
+        audio.addEventListener('loadedmetadata', updateActiveFromTime);
+        audio.addEventListener('seeked', updateActiveFromTime);
+      }
+
+      // Search.
+      function applyFilter() {
+        if (!input) return;
+        var raw = input.value || '';
+        var q = raw.trim().toLowerCase();
+        var matched = 0;
+        for (var i = 0; i < chapters.length; i++) {
+          var c = chapters[i];
+          if (!q) {
+            c.hidden = false;
+            matched++;
+            continue;
+          }
+          var hay = c.getAttribute('data-search-haystack') || '';
+          if (hay.indexOf(q) >= 0) {
+            c.hidden = false;
+            matched++;
+          } else {
+            c.hidden = true;
+          }
+        }
+        if (emptyMsg) emptyMsg.hidden = (matched > 0);
+        if (counter) {
+          if (!q) counter.textContent = '7 个章节';
+          else if (matched === 0) counter.textContent = '0 个章节';
+          else counter.textContent = '找到 ' + matched + ' 个章节';
+        }
+      }
+
+      if (input) {
+        input.addEventListener('input', applyFilter);
+        input.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' || e.keyCode === 27) {
+            input.value = '';
+            applyFilter();
+            e.preventDefault();
+          }
+        });
+      }
+      if (clearBtn) {
+        clearBtn.addEventListener('click', function () {
+          if (!input) return;
+          input.value = '';
+          applyFilter();
+          input.focus();
+        });
+      }
+
+      // Initial active state.
+      setActiveByStart(chapters.length ? chapters[0].getAttribute('data-chapter-id') : null);
+      applyFilter();
+    })();
+  </script>
+</BaseLayout>

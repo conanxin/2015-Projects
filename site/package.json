@@ -9,7 +9,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check",
+    "check": "npm run validate:stories && astro check",
+    "validate:stories": "node scripts/validate-story-data.mjs",
     "astro": "astro"
   },
   "dependencies": {
